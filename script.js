@@ -60,3 +60,67 @@ var colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+document.body.style.backgroundColor = colors[0]
+const quoteBox = document.querySelector("#quote-box")
+console.log(quoteBox)
+quoteBox.style.border = `solid 2px ${colors[6]}`
+const showListButton = document.createElement("button")
+showListButton.textContent = "Hide list"
+document.body.querySelector(".container").appendChild(showListButton)
+let fullQuote = quoteBox.getElementsByTagName("p")
+for (item of fullQuote){
+  item.style.color = "white"
+}
+//fullQuote[0].style.fontSize = "30px"
+let mainQuote = document.querySelector(".quote")
+mainQuote.style.fontSize = "30px"
+
+const quoteUL = document.createElement("ul")
+document.body.querySelector(".container").appendChild(quoteUL)
+
+// for (item of quotes){
+//   let litem = document.createElement("li")
+//   litem.innerText = item.quote.slice(0,10) + "..."
+//   litem.addEventListener('click', ()=>{
+//     console.log(litem.innerText)
+//   })
+
+//   quoteUL.appendChild(litem)
+// }
+for (index in quotes){
+  let litem = document.createElement("li")
+  litem.innerText = quotes[index].quote.slice(0,10) + "..."
+  litem.value = index
+  litem.addEventListener('click', (e)=>{
+    console.log(e.target.value)
+    mainQuote.innerText = quotes[e.target.value].quote
+    fullQuote[1].textContent = quotes[e.target.value].source
+  })
+
+  quoteUL.appendChild(litem)
+}
+
+//An event that hide/show the list of quotes
+showListButton.addEventListener('click', ()=>{
+  if (quoteUL.style.display == 'none'){
+    quoteUL.style.display = 'list-item'
+    showListButton.innerText = "Hide list"
+  }else{
+    quoteUL.style.display = 'none'
+    showListButton.innerText = "Show list"
+  }
+  
+})
+function getRandomQuote(){
+  rNumber = Math.floor(Math.random() * quotes.length)
+  console.log(rNumber)
+  return quotes[rNumber]
+}
+
+mainQuote.addEventListener('click', ()=>{
+  let quote = getRandomQuote()
+  //console.log(quote)
+  mainQuote.textContent = quote.quote
+  fullQuote[1].textContent = quote.source
+})
