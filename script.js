@@ -88,21 +88,22 @@ document.body.querySelector(".container").appendChild(quoteUL)
 
 //   quoteUL.appendChild(litem)
 // }
+function clickListItem(event){
+  mainQuote.innerText = quotes[event.target.value].quote
+  fullQuote[1].textContent = quotes[event.target.value].source
+}
+
 for (index in quotes){
   let litem = document.createElement("li")
   litem.innerText = quotes[index].quote.slice(0,10) + "..."
   litem.value = index
-  litem.addEventListener('click', (e)=>{
-    console.log(e.target.value)
-    mainQuote.innerText = quotes[e.target.value].quote
-    fullQuote[1].textContent = quotes[e.target.value].source
-  })
+
+  litem.addEventListener('click', clickListItem)
 
   quoteUL.appendChild(litem)
 }
 
-//An event that hide/show the list of quotes
-showListButton.addEventListener('click', ()=>{
+function toggleList(){
   if (quoteUL.style.display == 'none'){
     quoteUL.style.display = 'list-item'
     showListButton.innerText = "Hide list"
@@ -110,17 +111,27 @@ showListButton.addEventListener('click', ()=>{
     quoteUL.style.display = 'none'
     showListButton.innerText = "Show list"
   }
-  
-})
+}
+console.log(typeof toggleList())
+//An event that hide/show the list of quotes
+showListButton.addEventListener('click', toggleList)
+//callback(event)
 function getRandomQuote(){
   rNumber = Math.floor(Math.random() * quotes.length)
   console.log(rNumber)
   return quotes[rNumber]
 }
 
-mainQuote.addEventListener('click', ()=>{
+function changeMainQuote() {
   let quote = getRandomQuote()
-  //console.log(quote)
   mainQuote.textContent = quote.quote
   fullQuote[1].textContent = quote.source
-})
+}
+mainQuote.addEventListener('click', changeMainQuote)
+
+// mainQuote.addEventListener('click', ()=>{
+//   let quote = getRandomQuote()
+//   //console.log(quote)
+//   mainQuote.textContent = quote.quote
+//   fullQuote[1].textContent = quote.source
+// })
